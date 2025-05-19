@@ -1,53 +1,40 @@
 def parse_input(user_input):
-    # розбиваємо команду і аргументи
-    parts = user_input.strip().split()
-    command = parts[0].lower()
-    args = parts[1:]
-    return command, args
+    cmd, *args = user_input.strip().split()
+    return cmd.lower(), *args
 
 def add_contact(args, contacts):
-    # додати контакт у словник
     if len(args) < 2:
         return "Please provide both name and phone number."
-    name = args[0]
-    phone = args[1]
+    name, phone = args
     contacts[name] = phone
-    return f"Contact added."
+    return "Contact added."
 
 def change_contact(args, contacts):
-    # змінити номер контакту
     if len(args) < 2:
         return "Please provide both name and new phone number."
-    name = args[0]
+    name, new_phone = args
     if name not in contacts:
         return "Not found."
-    new_phone = args[1]
     contacts[name] = new_phone
-    return f"Contact updated."
+    return "Contact updated."
 
 def show_phone(args, contacts):
-    # показати номер телефону
     if len(args) < 1:
         return "Please provide a contact name."
     name = args[0]
     return contacts.get(name, "Contact not found.")
 
 def show_all(contacts):
-    # вивести всі контакти
     if not contacts:
         return "No contacts found."
-    result = ""
-    for name, phone in contacts.items():
-        result += f"{name}: {phone}\n"
-    return result.strip()
+    return "\n".join(f"{name}: {phone}" for name, phone in contacts.items())
 
 def main():
     contacts = {}
     print("Welcome to the assistant bot!")
-
     while True:
         user_input = input("Enter a command: ")
-        command, args = parse_input(user_input)
+        command, *args = parse_input(user_input)
 
         if command in ["close", "exit"]:
             print("Good bye!")
