@@ -1,3 +1,8 @@
+with open('path.txt', 'w') as fh:
+    fh.write("Alex Korp,3000\n")
+    fh.write("Nikita Borisenko,2000\n")
+    fh.write("Sitarama Raju,1000\n")
+
 def calculate_salaries(file_path):
     try:
         total_salary = 0
@@ -17,3 +22,16 @@ def calculate_salaries(file_path):
         
         if developer_count == 0:
             print("⚠️ Дані відсутні або некоректні.")
+            return
+
+        average_salary = total_salary / developer_count
+        print(f"Загальна сума зарплат: {total_salary}")
+        print(f"Середня зарплата: {average_salary:.2f}")
+
+    except FileNotFoundError:
+        print("❌ Помилка: файл не знайдено.")
+    except Exception as e:
+        print(f"❌ Сталася невідома помилка: {e}")
+
+# Виклик функції
+calculate_salaries("path.txt")
